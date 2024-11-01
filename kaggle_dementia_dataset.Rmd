@@ -1,0 +1,116 @@
+---
+title: "Dementia_Dataset_Kaggle"
+author: "Trinity disAbility Service - Mark Likeman"
+date: "2024-11-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+```
+
+
+# Setting file path for the dementia_dataset
+data <- read.csv("/Users/marklikeman/documents/Dementia_Kaggle/dementia_dataset.csv", header = TRUE)
+
+
+
+```{r}
+## Load libraries
+pkgTest <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[,  "Package"])]
+  if (length(new.pkg)) 
+    install.packages(new.pkg,  dependencies = TRUE)
+  sapply(pkg,  require,  character.only = TRUE)
+}
+
+lapply(c("tidyverse"),  pkgTest)
+```
+
+
+```{r}
+
+# View the first few rows of the dataset
+head(data)
+
+# View the structure of the dataset (types of variables and data)
+str(data)
+
+# Get a summary of the dataset (basic statistics for each variable)
+summary(data)
+
+```
+
+
+```{r}
+
+# Count missing values in each column
+colSums(is.na(data))
+
+```
+
+
+```{r}
+# Mean age
+mean(data$Age, na.rm = TRUE)
+
+# Median MMSE score
+median(data$MMSE, na.rm = TRUE)
+
+# Standard deviation of eTIV
+sd(data$eTIV, na.rm = TRUE)
+
+```
+
+```{r}
+
+# Using 'Group' as the categorical 
+table(data$Group)
+
+```
+
+
+```{r}
+# Using as the numerical
+summary(data$Age)
+
+# Calculate the mean, median, and standard deviation
+mean(data$Age, na.rm = TRUE)
+median(data$Age, na.rm = TRUE)
+sd(data$Age, na.rm = TRUE)
+
+```
+
+
+```{r}
+# Histogram for a numerical variable
+hist(data$Age, main = "Histogram of Numerical Column - Age", xlab = "Values", ylab = "Frequency")
+
+# Boxplot for a numerical variable
+boxplot(data$Age, main = "Boxplot of Numerical Column", ylab = "Values")
+
+# Bar plot for a categorical variable
+barplot(table(data$Group), main = "Bar Plot of Categorical Column - Group", xlab = "Categories", ylab = "Frequency")
+
+```
+
+
+
+```{r}
+
+
+# Group by a categorical variable (e.g., 'Group') and summarize a numerical variable (e.g., 'Age')
+data %>%
+  group_by(Group) %>%
+  summarize(
+    count = n(),
+    mean_value = mean(Age, na.rm = TRUE),
+    sd_value = sd(Age, na.rm = TRUE)
+  )
+
+
+```
+
+
