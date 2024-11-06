@@ -2,7 +2,6 @@
 title: "Dementia_Dataset_Kaggle"
 author: "Trinity disAbility Service - Mark Likeman"
 date: "2024-11-01"
-output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -12,105 +11,78 @@ library(dplyr)
 ```
 
 
-# Setting file path for the dementia_dataset
-data <- read.csv("/Users/marklikeman/documents/Dementia_Kaggle/dementia_dataset.csv", header = TRUE)
-
-
-
+## Load data
 ```{r}
-## Load libraries
+dementia_data <- read.csv("/Users/marklikeman/documents/Dementia_Kaggle/dementia_dataset.csv", header = TRUE)
+```
+
+
+## About Longitudinal research 
+<!-- 
+
+A longitudinal collection of 150 subjects aged 60 to 96 refers to a study or data collection effort where information on 150 individuals within this age range is gathered over an extended period. In longitudinal studies, researchers repeatedly collect data from the same subjects over time, allowing them to observe changes and trends in specific variables, such as health status, cognitive function, or behavior, as the subjects age. This type of study can provide valuable insights into how various factors evolve with age and can highlight trends relevant to the aging process, the development of age-related conditions, or the impact of interventions over time.
+
+-->
+
+## Package Loading Function
+```{r}
 pkgTest <- function(pkg){
-  new.pkg <- pkg[!(pkg %in% installed.packages()[,  "Package"])]
-  if (length(new.pkg)) 
-    install.packages(new.pkg,  dependencies = TRUE)
-  sapply(pkg,  require,  character.only = TRUE)
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg)) install.packages(new.pkg, dependencies = TRUE)
+  sapply(pkg, require, character.only = TRUE)
 }
-
-lapply(c("tidyverse"),  pkgTest)
+lapply(c("tidyverse"), pkgTest)
 ```
 
 
+## Data Summary
 ```{r}
+# View the first few rows
+head(dementia_data)
 
-# View the first few rows of the dataset
-head(data)
+# View data structure
+str(dementia_data)
 
-# View the structure of the dataset (types of variables and data)
-str(data)
+# Summary statistics
+summary(dementia_data)
 
-# Get a summary of the dataset (basic statistics for each variable)
-summary(data)
+# Count missing values
+colSums(is.na(dementia_data))
 
+# Mean, median, and standard deviation of Age, MMSE, and eTIV
+mean(dementia_data$Age, na.rm = TRUE)
+median(dementia_data$MMSE, na.rm = TRUE)
+sd(dementia_data$eTIV, na.rm = TRUE)
 ```
 
 
+## Visualizations
+
 ```{r}
+# Age histogram using ggplot2
+ggplot(dementia_data, aes(x = Age)) + 
+  geom_histogram(binwidth = 5, fill = "blue", color = "black") +
+  labs(title = "Histogram of Age", x = "Age", y = "Frequency")
 
-# Count missing values in each column
-colSums(is.na(data))
+# Boxplot for Age
+boxplot(dementia_data$Age, main = "Boxplot of Age", ylab = "Values")
 
+# Bar plot for categorical variable 'Group'
+ggplot(dementia_data, aes(x = Group)) + 
+  geom_bar(fill = "lightblue") +
+  labs(title = "Group Distribution", x = "Group", y = "Count")
 ```
 
-
+## Group Summarization
 ```{r}
-# Mean age
-mean(data$Age, na.rm = TRUE)
-
-# Median MMSE score
-median(data$MMSE, na.rm = TRUE)
-
-# Standard deviation of eTIV
-sd(data$eTIV, na.rm = TRUE)
-
-```
-
-```{r}
-
-# Using 'Group' as the categorical 
-table(data$Group)
-
-```
-
-
-```{r}
-# Using as the numerical
-summary(data$Age)
-
-# Calculate the mean, median, and standard deviation
-mean(data$Age, na.rm = TRUE)
-median(data$Age, na.rm = TRUE)
-sd(data$Age, na.rm = TRUE)
-
-```
-
-
-```{r}
-# Histogram for a numerical variable
-hist(data$Age, main = "Histogram of Numerical Column - Age", xlab = "Values", ylab = "Frequency")
-
-# Boxplot for a numerical variable
-boxplot(data$Age, main = "Boxplot of Numerical Column", ylab = "Values")
-
-# Bar plot for a categorical variable
-barplot(table(data$Group), main = "Bar Plot of Categorical Column - Group", xlab = "Categories", ylab = "Frequency")
-
-```
-
-
-
-```{r}
-
-
-# Group by a categorical variable (e.g., 'Group') and summarize a numerical variable (e.g., 'Age')
-data %>%
+# Summary statistics by Group
+dementia_data %>%
   group_by(Group) %>%
   summarize(
     count = n(),
-    mean_value = mean(Age, na.rm = TRUE),
-    sd_value = sd(Age, na.rm = TRUE)
+    mean_age = mean(Age, na.rm = TRUE),
+    sd_age = sd(Age, na.rm = TRUE)
   )
-
-
 ```
 
 
