@@ -2,6 +2,7 @@
 title: "Dementia_Dataset_Kaggle"
 author: "Trinity disAbility Service - Mark Likeman"
 date: "2024-11-01"
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
