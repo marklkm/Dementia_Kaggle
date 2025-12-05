@@ -39,7 +39,7 @@ This dataset allows exploration of structural atrophy, cognitive impairment, and
 If you add a /figures folder with exported PNGs, GitHub will render the images here.
 
 1️⃣ Age Distribution
-<br><img src="figures/age_histogram.png" width="500"/>
+<br><img src="figures/age_histogram.png" width="500"/><br>
 2️⃣ MMSE Distribution
 <br><img src="figures/mmse_hist.png" width="500"/>
 3️⃣ Dementia Group Counts
