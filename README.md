@@ -41,7 +41,7 @@ If you add a /figures folder with exported PNGs, GitHub will render the images h
 1️⃣ Age Distribution
 <br><img src="figures/age_histogram.png" width="500"/>
 2️⃣ MMSE Distribution
-<img src="figures/mmse_hist.png" width="500"/>
+<br><img src="figures/mmse_hist.png" width="500"/>
 3️⃣ Dementia Group Counts
 <img src="figures/group_barplot.png" width="450"/>
 4️⃣ nWBV Distribution (Brain Volume)
