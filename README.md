@@ -41,24 +41,24 @@ This dataset allows exploration of structural atrophy, cognitive impairment, and
 2️⃣ MMSE Distribution
 <br><img src="figures/mmse_hist.png" width="500"/><br>
 3️⃣ Dementia Group Counts
-<br><img src="figures/group_barplot.png" width="450"/><br>
+<br><img src="figures/group_barplot.png" width="500"/><br>
 4️⃣ nWBV Distribution (Brain Volume)
 <br><img src="figures/nwbv_hist.png" width="500"/><br>
 5️⃣ Age by Group
-<br><img src="figures/age_by_group_boxplot.png" width="450"/><br>
+<br><img src="figures/age_by_group_boxplot.png" width="500"/><br>
 6️⃣ MMSE by Group
-<br><img src="figures/mmse_by_group_boxplot.png" width="450"/><br>
+<br><img src="figures/mmse_by_group_boxplot.png" width="500"/><br>
 7️⃣ nWBV by Group
-<br><img src="figures/nwbv_by_group_boxplot.png" width="450"/><br>
+<br><img src="figures/nwbv_by_group_boxplot.png" width="500"/><br>
 8️⃣ Correlation Matrix
 <br><img src="figures/correlation_matrix.png" width="500"/><br>
 9️⃣ Scatterplots
 
 MMSE vs Age
-<br><img src="figures/mmse_vs_age.png" width="450"/><br>
+<br><img src="figures/mmse_vs_age.png" width="500"/><br>
 
 nWBV vs Age
-<br><img src="figures/nwbv_vs_age.png" width="450"/><br>
+<br><img src="figures/nwbv_vs_age.png" width="500"/><br>
 
 🧪 Logistic Regression Model
 
