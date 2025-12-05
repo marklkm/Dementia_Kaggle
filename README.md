@@ -36,8 +36,6 @@ This dataset allows exploration of structural atrophy, cognitive impairment, and
 
 📊 Key Figures
 
-If you add a /figures folder with exported PNGs, GitHub will render the images here.
-
 1️⃣ Age Distribution
 <br><img src="figures/age_histogram.png" width="500"/><br>
 2️⃣ MMSE Distribution
@@ -57,10 +55,10 @@ If you add a /figures folder with exported PNGs, GitHub will render the images h
 9️⃣ Scatterplots
 
 MMSE vs Age
-<img src="figures/mmse_vs_age.png" width="450"/>
+<br><img src="figures/mmse_vs_age.png" width="450"/><br>
 
 nWBV vs Age
-<img src="figures/nwbv_vs_age.png" width="450"/>
+<br><img src="figures/nwbv_vs_age.png" width="450"/><br>
 
 🧪 Logistic Regression Model
 
