@@ -41,19 +41,19 @@ If you add a /figures folder with exported PNGs, GitHub will render the images h
 1️⃣ Age Distribution
 <br><img src="figures/age_histogram.png" width="500"/><br>
 2️⃣ MMSE Distribution
-<br><img src="figures/mmse_hist.png" width="500"/>
+<br><img src="figures/mmse_hist.png" width="500"/><br>
 3️⃣ Dementia Group Counts
-<img src="figures/group_barplot.png" width="450"/>
+<br><img src="figures/group_barplot.png" width="450"/><br>
 4️⃣ nWBV Distribution (Brain Volume)
-<img src="figures/nwbv_hist.png" width="500"/>
+<br><img src="figures/nwbv_hist.png" width="500"/><br>
 5️⃣ Age by Group
-<img src="figures/age_by_group_boxplot.png" width="450"/>
+<br><img src="figures/age_by_group_boxplot.png" width="450"/><br>
 6️⃣ MMSE by Group
-<img src="figures/mmse_by_group_boxplot.png" width="450"/>
+<br><img src="figures/mmse_by_group_boxplot.png" width="450"/><br>
 7️⃣ nWBV by Group
-<img src="figures/nwbv_by_group_boxplot.png" width="450"/>
+<br><img src="figures/nwbv_by_group_boxplot.png" width="450"/><br>
 8️⃣ Correlation Matrix
-<img src="figures/correlation_matrix.png" width="500"/>
+<br><img src="figures/correlation_matrix.png" width="500"/><br>
 9️⃣ Scatterplots
 
 MMSE vs Age
