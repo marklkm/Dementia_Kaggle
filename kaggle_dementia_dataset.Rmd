@@ -1,3 +1,4 @@
+---
 title: "Exploratory Analysis of a Longitudinal Dementia Dataset (Kaggle)"
 author: "Trinity disAbility Service – Mark Likeman"
 date: "`r format(Sys.Date(), '%d %B %Y')`"
@@ -9,15 +10,17 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  echo = TRUE,
+  echo    = TRUE,
   message = FALSE,
-  warning = FALSE
+  warning = FALSE,
+  fig.path = "figures/"
 )
 
 library(tidyverse)
 
 # Consistent, readable theme for all figures
 theme_set(theme_minimal(base_size = 13))
+
 
 # Load the dataset using a relative path so that the file is portable
 
@@ -38,6 +41,7 @@ summary(dementia_data)
 # Missing values by variable
 
 colSums(is.na(dementia_data))
+
 
 overall_summary <- dementia_data %>%
 summarise(
@@ -70,12 +74,14 @@ x = "Age (years)",
 y = "Number of participants"
 )
 
+
 ggplot(dementia_data, aes(y = Age)) +
 geom_boxplot() +
 labs(
 title = "Boxplot of participant age",
 y = "Age (years)"
 )
+
 
 group_counts <- dementia_data %>%
 count(Group) %>%
@@ -85,6 +91,7 @@ proportion = n / sum(n)
 
 group_counts
 
+
 ggplot(dementia_data, aes(x = Group)) +
 geom_bar() +
 labs(
@@ -92,6 +99,7 @@ title = "Distribution of dementia status",
 x = "Group",
 y = "Number of participants"
 )
+
 
 ggplot(dementia_data, aes(x = MMSE)) +
 geom_histogram(binwidth = 2) +
@@ -101,7 +109,8 @@ x = "MMSE score",
 y = "Number of participants"
 )
 
- brain_summary <- dementia_data %>%
+
+brain_summary <- dementia_data %>%
 summarise(
 mean_eTIV = mean(eTIV, na.rm = TRUE),
 sd_eTIV   = sd(eTIV,   na.rm = TRUE),
@@ -111,6 +120,7 @@ sd_nWBV   = sd(nWBV,   na.rm = TRUE)
 
 brain_summary
 
+
 ggplot(dementia_data, aes(x = nWBV)) +
 geom_histogram(binwidth = 0.02) +
 labs(
@@ -118,6 +128,7 @@ title = "Distribution of normalised whole brain volume (nWBV)",
 x = "nWBV",
 y = "Number of participants"
 )
+
 
 group_summary <- dementia_data %>%
 group_by(Group) %>%
@@ -135,6 +146,7 @@ sd_nWBV   = sd(nWBV,     na.rm = TRUE)
 
 group_summary
 
+
 ggplot(dementia_data, aes(x = Group, y = Age)) +
 geom_boxplot() +
 labs(
@@ -151,6 +163,7 @@ x = "Group",
 y = "MMSE score"
 )
 
+
 ggplot(dementia_data, aes(x = Group, y = nWBV)) +
 geom_boxplot() +
 labs(
@@ -159,11 +172,13 @@ x = "Group",
 y = "nWBV"
 )
 
+
 numeric_vars <- dementia_data %>%
 select(Age, MMSE, CDR, eTIV, nWBV, EDUC, SES)
 
 cor_matrix <- cor(numeric_vars, use = "pairwise.complete.obs")
 cor_matrix
+
 
 ggplot(dementia_data, aes(x = Age, y = MMSE, colour = Group)) +
 geom_point(alpha = 0.7) +
@@ -173,6 +188,7 @@ x = "Age (years)",
 y = "MMSE score"
 )
 
+
 ggplot(dementia_data, aes(x = Age, y = nWBV, colour = Group)) +
 geom_point(alpha = 0.7) +
 labs(
@@ -180,6 +196,7 @@ title = "Normalised whole brain volume as a function of age by dementia status",
 x = "Age (years)",
 y = "nWBV"
 )
+
 
 # Create a binary outcome: 1 = Demented, 0 = Nondemented
 
@@ -200,6 +217,6 @@ family = binomial
 summary(logit_model)
 
 
+
+
 ::contentReference[oaicite:0]{index=0}
-
-
