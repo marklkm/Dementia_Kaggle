@@ -34,15 +34,6 @@ This dataset allows exploration of structural atrophy, cognitive impairment, and
 ✔️ Examine correlations between brain volume, age, and cognition
 ✔️ Fit an exploratory logistic regression (Age + MMSE + nWBV → Dementia)
 
-📂 Repository Structure
-📁 Dementia_Kaggle
-│
-├── 📄 dementia_dataset.csv # Raw dataset
-├── 📄 kaggle_dementia_dataset.Rmd # Full analysis (EDA + modelling)
-├── 📄 kaggle_dementia_dataset.pdf # Knitted report (optional)
-├── 📄 README.md # Project documentation
-└── 📁 figures/ # (Optional) Exported images for README
-
 📊 Key Figures
 
 If you add a /figures folder with exported PNGs, GitHub will render the images here.
