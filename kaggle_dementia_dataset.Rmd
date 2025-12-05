@@ -1,89 +1,205 @@
----
-title: "Dementia_Dataset_Kaggle"
-author: "Trinity disAbility Service - Mark Likeman"
-date: "2024-11-01"
-output: pdf_document
+title: "Exploratory Analysis of a Longitudinal Dementia Dataset (Kaggle)"
+author: "Trinity disAbility Service – Mark Likeman"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+
 library(tidyverse)
-library(dplyr)
-```
 
+# Consistent, readable theme for all figures
+theme_set(theme_minimal(base_size = 13))
 
-## Load data
-```{r}
-dementia_data <- read.csv("/Users/marklikeman/documents/Dementia_Kaggle/dementia_dataset.csv", header = TRUE)
-```
+# Load the dataset using a relative path so that the file is portable
 
+dementia_data <- read.csv("dementia_dataset.csv", header = TRUE)
 
-## About Longitudinal research 
-<!-- 
+# Display the first few rows
 
-A longitudinal collection of 150 subjects aged 60 to 96 refers to a study or data collection effort where information on 150 individuals within this age range is gathered over an extended period. In longitudinal studies, researchers repeatedly collect data from the same subjects over time, allowing them to observe changes and trends in specific variables, such as health status, cognitive function, or behavior, as the subjects age. This type of study can provide valuable insights into how various factors evolve with age and can highlight trends relevant to the aging process, the development of age-related conditions, or the impact of interventions over time.
-
--->
-
-## Package Loading Function
-```{r}
-pkgTest <- function(pkg){
-  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-  if (length(new.pkg)) install.packages(new.pkg, dependencies = TRUE)
-  sapply(pkg, require, character.only = TRUE)
-}
-lapply(c("tidyverse"), pkgTest)
-```
-
-
-## Data Summary
-```{r}
-# View the first few rows
 head(dementia_data)
 
-# View data structure
+# Overall structure
+
 str(dementia_data)
 
-# Summary statistics
+# Summary statistics for all variables
+
 summary(dementia_data)
 
-# Count missing values
+# Missing values by variable
+
 colSums(is.na(dementia_data))
 
-# Mean, median, and standard deviation of Age, MMSE, and eTIV
-mean(dementia_data$Age, na.rm = TRUE)
-median(dementia_data$MMSE, na.rm = TRUE)
-sd(dementia_data$eTIV, na.rm = TRUE)
+overall_summary <- dementia_data %>%
+summarise(
+mean_age    = mean(Age,    na.rm = TRUE),
+median_age  = median(Age,  na.rm = TRUE),
+sd_age      = sd(Age,      na.rm = TRUE),
+)
+```
+mean_MMSE   = mean(MMSE,   na.rm = TRUE),
+median_MMSE = median(MMSE, na.rm = TRUE),
+sd_MMSE     = sd(MMSE,     na.rm = TRUE),
+
+mean_eTIV   = mean(eTIV,   na.rm = TRUE),
+sd_eTIV     = sd(eTIV,     na.rm = TRUE),
+
+mean_nWBV   = mean(nWBV,   na.rm = TRUE),
+sd_nWBV     = sd(nWBV,     na.rm = TRUE)
 ```
 
+)
 
-## Visualizations
+overall_summary
 
-```{r}
-# Age histogram using ggplot2
-ggplot(dementia_data, aes(x = Age)) + 
-  geom_histogram(binwidth = 5, fill = "blue", color = "black") +
-  labs(title = "Histogram of Age", x = "Age", y = "Frequency")
 
-# Boxplot for Age
-boxplot(dementia_data$Age, main = "Boxplot of Age", ylab = "Values")
+ggplot(dementia_data, aes(x = Age)) +
+geom_histogram(binwidth = 5) +
+labs(
+title = "Age distribution of participants",
+x = "Age (years)",
+y = "Number of participants"
+)
 
-# Bar plot for categorical variable 'Group'
-ggplot(dementia_data, aes(x = Group)) + 
-  geom_bar(fill = "lightblue") +
-  labs(title = "Group Distribution", x = "Group", y = "Count")
-```
+ggplot(dementia_data, aes(y = Age)) +
+geom_boxplot() +
+labs(
+title = "Boxplot of participant age",
+y = "Age (years)"
+)
 
-## Group Summarization
-```{r}
-# Summary statistics by Group
-dementia_data %>%
-  group_by(Group) %>%
-  summarize(
-    count = n(),
-    mean_age = mean(Age, na.rm = TRUE),
-    sd_age = sd(Age, na.rm = TRUE)
-  )
-```
+group_counts <- dementia_data %>%
+count(Group) %>%
+mutate(
+proportion = n / sum(n)
+)
+
+group_counts
+
+ggplot(dementia_data, aes(x = Group)) +
+geom_bar() +
+labs(
+title = "Distribution of dementia status",
+x = "Group",
+y = "Number of participants"
+)
+
+ggplot(dementia_data, aes(x = MMSE)) +
+geom_histogram(binwidth = 2) +
+labs(
+title = "Distribution of MMSE scores",
+x = "MMSE score",
+y = "Number of participants"
+)
+
+ brain_summary <- dementia_data %>%
+summarise(
+mean_eTIV = mean(eTIV, na.rm = TRUE),
+sd_eTIV   = sd(eTIV,   na.rm = TRUE),
+mean_nWBV = mean(nWBV, na.rm = TRUE),
+sd_nWBV   = sd(nWBV,   na.rm = TRUE)
+)
+
+brain_summary
+
+ggplot(dementia_data, aes(x = nWBV)) +
+geom_histogram(binwidth = 0.02) +
+labs(
+title = "Distribution of normalised whole brain volume (nWBV)",
+x = "nWBV",
+y = "Number of participants"
+)
+
+group_summary <- dementia_data %>%
+group_by(Group) %>%
+summarise(
+count     = n(),
+mean_age  = mean(Age,    na.rm = TRUE),
+sd_age    = sd(Age,      na.rm = TRUE),
+mean_MMSE = mean(MMSE,   na.rm = TRUE),
+sd_MMSE   = sd(MMSE,     na.rm = TRUE),
+mean_eTIV = mean(eTIV,   na.rm = TRUE),
+sd_eTIV   = sd(eTIV,     na.rm = TRUE),
+mean_nWBV = mean(nWBV,   na.rm = TRUE),
+sd_nWBV   = sd(nWBV,     na.rm = TRUE)
+)
+
+group_summary
+
+ggplot(dementia_data, aes(x = Group, y = Age)) +
+geom_boxplot() +
+labs(
+title = "Age distribution by dementia status",
+x = "Group",
+y = "Age (years)"
+)
+
+ggplot(dementia_data, aes(x = Group, y = MMSE)) +
+geom_boxplot() +
+labs(
+title = "MMSE scores by dementia status",
+x = "Group",
+y = "MMSE score"
+)
+
+ggplot(dementia_data, aes(x = Group, y = nWBV)) +
+geom_boxplot() +
+labs(
+title = "Normalised whole brain volume (nWBV) by dementia status",
+x = "Group",
+y = "nWBV"
+)
+
+numeric_vars <- dementia_data %>%
+select(Age, MMSE, CDR, eTIV, nWBV, EDUC, SES)
+
+cor_matrix <- cor(numeric_vars, use = "pairwise.complete.obs")
+cor_matrix
+
+ggplot(dementia_data, aes(x = Age, y = MMSE, colour = Group)) +
+geom_point(alpha = 0.7) +
+labs(
+title = "MMSE as a function of age by dementia status",
+x = "Age (years)",
+y = "MMSE score"
+)
+
+ggplot(dementia_data, aes(x = Age, y = nWBV, colour = Group)) +
+geom_point(alpha = 0.7) +
+labs(
+title = "Normalised whole brain volume as a function of age by dementia status",
+x = "Age (years)",
+y = "nWBV"
+)
+
+# Create a binary outcome: 1 = Demented, 0 = Nondemented
+
+dementia_data <- dementia_data %>%
+mutate(
+Group_bin = ifelse(Group == "Demented", 1, 0)
+)
+
+
+# Fit a simple logistic regression model
+
+logit_model <- glm(
+Group_bin ~ Age + MMSE + nWBV,
+data   = dementia_data,
+family = binomial
+)
+
+summary(logit_model)
+
+
+::contentReference[oaicite:0]{index=0}
 
 
