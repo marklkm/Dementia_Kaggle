@@ -179,6 +179,14 @@ select(Age, MMSE, CDR, eTIV, nWBV, EDUC, SES)
 cor_matrix <- cor(numeric_vars, use = "pairwise.complete.obs")
 cor_matrix
 
+p <- ggcorrplot(cor_matrix, 
+                lab = TRUE, 
+                outline.col = "white",
+                ggtheme = theme_minimal())
+
+ggsave("figures/correlation_matrix.png", p, width = 6, height = 6)
+
+
 
 ggplot(dementia_data, aes(x = Age, y = MMSE, colour = Group)) +
 geom_point(alpha = 0.7) +
